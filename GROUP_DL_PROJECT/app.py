@@ -20,7 +20,7 @@ import tensorflow as tf
 # Resolve paths relative to this file so `streamlit run app.py` works
 # no matter which directory you launch it from.
 ROOT = Path(__file__).resolve().parent
-MODEL_PATH = ROOT / "models" / "mobilenetv2_tl.keras"
+MODEL_PATH = ROOT / "models" / "mobilenetv2_tl.h5"
 LABELS_PATH = ROOT / "models" / "label_map.json"
 IMG_SIZE = (224, 224)
 
