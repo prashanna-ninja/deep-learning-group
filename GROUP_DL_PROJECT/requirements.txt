@@ -1,8 +1,8 @@
 # Runtime deps for the deployed Streamlit app (app.py).
 # Slim on purpose so it fits free-tier hosting (Streamlit Cloud / HF Spaces).
-streamlit==1.36.0
+streamlit
 tensorflow==2.10.1
-protobuf==3.19.6
+protobuf==3.20.3
 numpy==1.26.4
 pillow
 # --- Training-only (needed to run notebooks/NSL_pipeline.ipynb locally,
