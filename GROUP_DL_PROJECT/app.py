@@ -1,12 +1,10 @@
 """
 Nepali Sign Language (NSL) Alphabet Recognition - Streamlit demo.
-
 Run after training the notebook:
-    pip install streamlit opencv-python tensorflow pillow
+    pip install streamlit tensorflow-cpu pillow
     streamlit run app.py
-
 Loads:
-    models/mobilenetv2_tl.keras
+    models/mobilenetv2_tl.h5
     models/label_map.json
 """
 import json
@@ -16,6 +14,18 @@ import numpy as np
 import streamlit as st
 from PIL import Image
 import tensorflow as tf
+from tensorflow.keras.layers import DepthwiseConv2D as _DepthwiseConv2D
+
+
+# --- Compatibility shim -------------------------------------------------
+# The model was trained with TensorFlow 2.10 (older Keras), which stored a
+# `groups` argument on DepthwiseConv2D. Modern Keras (on the server) removed
+# that argument, so we subclass the layer to drop it during loading.
+class DepthwiseConv2D(_DepthwiseConv2D):
+    def __init__(self, *args, **kwargs):
+        kwargs.pop("groups", None)
+        super().__init__(*args, **kwargs)
+
 
 # Resolve paths relative to this file so `streamlit run app.py` works
 # no matter which directory you launch it from.
@@ -29,7 +39,11 @@ st.set_page_config(page_title="NSL Alphabet Recognition", page_icon="\U0001F91F"
 
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model(MODEL_PATH)
+    return tf.keras.models.load_model(
+        MODEL_PATH,
+        custom_objects={"DepthwiseConv2D": DepthwiseConv2D},
+        compile=False,
+    )
 
 
 @st.cache_data
@@ -77,7 +91,7 @@ with tab_cam:
 if "img" in dir() and img is not None:
     col1, col2 = st.columns(2)
     with col1:
-        st.image(img, caption="Input", use_column_width=True)
+        st.image(img, caption="Input", width=320)
 
     probs = model.predict(preprocess(img), verbose=0)[0]
     top = probs.argsort()[::-1][:3]
