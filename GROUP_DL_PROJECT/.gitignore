@@ -1,0 +1,16 @@
+# --- data: don't commit the raw image dataset (put a link in data/README.md) ---
+data/**
+!data/README.md
+!data/.gitkeep
+
+# --- python / jupyter ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# --- large training artifacts (uncomment if models are too big for GitHub;
+#     consider Git LFS instead so the /models folder still ships) ---
+# models/*.keras
