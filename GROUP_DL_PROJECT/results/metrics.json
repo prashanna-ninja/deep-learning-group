@@ -1,0 +1,8 @@
+{
+  "baseline_test_acc": 0.9950617283950617,
+  "mobilenet_test_acc": 0.9980246913580247,
+  "num_classes": 36,
+  "n_train": 37800,
+  "n_val": 8100,
+  "n_test": 8100
+}

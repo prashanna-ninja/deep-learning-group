@@ -77,7 +77,7 @@ with tab_cam:
 if "img" in dir() and img is not None:
     col1, col2 = st.columns(2)
     with col1:
-        st.image(img, caption="Input", use_container_width=True)
+        st.image(img, caption="Input", use_column_width=True)
 
     probs = model.predict(preprocess(img), verbose=0)[0]
     top = probs.argsort()[::-1][:3]
