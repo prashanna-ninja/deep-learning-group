@@ -14,3 +14,5 @@ env/
 # --- large training artifacts (uncomment if models are too big for GitHub;
 #     consider Git LFS instead so the /models folder still ships) ---
 # models/*.keras
+data/
+
